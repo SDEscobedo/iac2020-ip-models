@@ -10,4 +10,4 @@ You can then start a local server by using
  ```
  npm start
  ```
-and open `http://localhost:3000/app/` for testing.
+and open `http://localhost:3000/model/` for testing.
