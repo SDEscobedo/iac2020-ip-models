@@ -48,7 +48,7 @@ class Model {
 		// texture
 
 		const textureLoader = new TextureLoader( manager );
-		const texture = textureLoader.load( '/src/assets/uv_grid_opengl.jpg' );
+		const texture = textureLoader.load( '../assets/uv_grid_opengl.jpg' );
 
 		function onProgress( xhr ) {
 
@@ -64,7 +64,7 @@ class Model {
 		function onError() {}
 
 		const loader = new OBJLoader( manager );
-		loader.load( '/src/assets/MotherShip.obj', function ( obj ) {
+		loader.load( '../assets/MotherShip.obj', function ( obj ) {
 
 			object = obj;
 
