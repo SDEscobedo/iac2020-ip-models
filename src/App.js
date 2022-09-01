@@ -13,7 +13,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 let camera, scene, renderer, object;
 
-class Model {
+class App {
 
 	init() {
 		scene = new Scene();
@@ -48,7 +48,7 @@ class Model {
 		// texture
 
 		const textureLoader = new TextureLoader( manager );
-		const texture = textureLoader.load( '../assets/uv_grid_opengl.jpg' );
+		const texture = textureLoader.load( '../app/assets/uv_grid_opengl.jpg' );
 
 		function onProgress( xhr ) {
 
@@ -64,7 +64,7 @@ class Model {
 		function onError() {}
 
 		const loader = new OBJLoader( manager );
-		loader.load( '../assets/MotherShip.obj', function ( obj ) {
+		loader.load( '../app/assets/MotherShip.obj', function ( obj ) {
 
 			object = obj;
 
@@ -103,4 +103,4 @@ function animate() {
 
 }
 
-export default Model;
+export default App;

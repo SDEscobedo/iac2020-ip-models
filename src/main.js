@@ -1,4 +1,4 @@
-import Model from './model.js';
+import App from './App.js';
 
-const model = new Model();
-model.init();
+const app = new App();
+app.init();
