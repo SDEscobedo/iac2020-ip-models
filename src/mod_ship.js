@@ -103,4 +103,4 @@ function animate() {
 
 }
 
-export default App;
+export { App }
