@@ -1,7 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve'; // locate and bundle dependencies in node_modules (mandatory)
 import { terser } from "rollup-plugin-terser"; // code minification (optional)
 
-export default {
+export default [{
 	input: 'src/main.js',
 	output: [
 		{
@@ -11,4 +11,16 @@ export default {
 		}
 	],
 	plugins: [ resolve(), terser() ]
-};
+},
+{
+	input: 'src/drone.js',
+	output: [
+		{
+			format: 'umd',
+			name: 'DRONE',
+			file: 'build/drone.js'
+		}
+	],
+	plugins: [ resolve(), terser() ]
+},
+];
