@@ -2,14 +2,13 @@ import {
 	PerspectiveCamera,
 	Scene,
 	WebGLRenderer,
-	LoadingManager,
 	AmbientLight,
 	PointLight,
-	TextureLoader
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+//import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 let camera, scene, renderer, object;
 
@@ -19,56 +18,52 @@ class App {
 		scene = new Scene();
 
 		camera = new PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-    	camera.position.z = 250;
+    	camera.position.z = 30;
 
-		const ambientLight = new AmbientLight( 0xcccccc, 0.4 );
+		const ambientLight = new AmbientLight( 0xffffff, 0.3 );
 		scene.add( ambientLight );
 
 		const pointLight = new PointLight( 0xffffff, 0.8 );
 		camera.add( pointLight );
 		scene.add( camera );
 
+		// Instantiate a loader
+		const loader = new GLTFLoader();
+
+		// Load a glTF resource
+	loader.load(
+		// resource URL
+		'../app/assets/mother-ship.glb',
+		// called when the resource is loaded
+		function ( gltf ) {
+
 		
-		function loadModel() {
+			scene.add( gltf.scene );
 
-			object.traverse( function ( child ) {
+			//gltf.animations; // Array<THREE.AnimationClip>
+			//gltf.scene; // THREE.Group
+			//gltf.scenes; // Array<THREE.Group>
+			//gltf.cameras; // Array<THREE.Camera>
+			//gltf.asset; // Object
 
-				if ( child.isMesh ) child.material.map = texture;
+		},
+		// called while loading is progressing
+		function ( xhr ) {
 
-			} );
+			console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
 
-			object.position.y = 0;
-			object.scale.set(0.1, 0.1, 0.1);
-			scene.add( object );
+		},
+		// called when loading has errors
+		function ( error ) {
 
-		}
-
-		const manager = new LoadingManager( loadModel );
-
-		// texture
-
-		const textureLoader = new TextureLoader( manager );
-		const texture = textureLoader.load( '../app/assets/uv_grid_opengl.jpg' );
-
-		function onProgress( xhr ) {
-
-			if ( xhr.lengthComputable ) {
-
-				const percentComplete = xhr.loaded / xhr.total * 100;
-				console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' );
-
-			}
+			console.log( 'An error happened' );
 
 		}
+		);
 
-		function onError() {}
+		
 
-		const loader = new OBJLoader( manager );
-		loader.load( '../app/assets/MotherShip.obj', function ( obj ) {
-
-			object = obj;
-
-		}, onProgress, onError );
+		
 
 
 		renderer = new WebGLRenderer( { antialias: true } );
