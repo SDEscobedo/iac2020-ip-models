@@ -69,12 +69,49 @@ class App {
 		renderer = new WebGLRenderer( { antialias: true } );
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		document.body.appendChild( renderer.domElement );
+		//document.body.appendChild( renderer.domElement );
+		document.getElementById( 'container' ).appendChild( renderer.domElement );
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		const controls = new OrbitControls( camera, renderer.domElement );
 
+
+		const buttonTable = document.getElementById( 'posprocessor' );
+        buttonTable.addEventListener( 'click', function () {
+    
+            transform( 'posprocessor' );
+    
+        }, false );
+    
+        const buttonlTable = document.getElementById( 'processor' );
+        buttonlTable.addEventListener( 'click', function () {
+    
+            transform( 'processor' );
+    
+        }, false );
+    
+        const buttonlBlock = document.getElementById( 'drones' );
+        buttonlBlock.addEventListener( 'click', function () {
+    
+            transform( 'drones' );
+
+    
+        }, false );
+		const buttonPanel = document.getElementById( 'panel' );
+        buttonPanel.addEventListener( 'click', function () {
+    
+            transform( 'panel' );
+
+    
+        }, false );
+		const buttonDeploy = document.getElementById( 'deployer' );
+        buttonDeploy.addEventListener( 'click', function () {
+    
+            transform( 'deployer' );
+
+    
+        }, false );
 
 		animate();
 
@@ -91,10 +128,34 @@ function onWindowResize() {
 
 }
 
+function transform(object) {
+	if (object=='drones'){
+		camera.position.set(4,3.3,5.3);
+		camera.lookAt(0,3,0);
+		camera.updateProjectionMatrix();	
+	}else if (object=='processor'){
+		camera.position.set(5.1,0,5.5);
+		camera.lookAt(0,0,0);
+	}else if (object=='posprocessor'){
+		camera.position.set(3.2,-7.7,6.3);
+		camera.lookAt(0,-3,0);
+	}else if (object=='panel'){
+		camera.position.set(-6.4,-14,7.2);
+		camera.lookAt(-5.8,0,0);
+	}else if (object=='deployer'){
+		camera.position.set(-2.5,4.8,5.2);
+		camera.lookAt(0,4.8,0);
+	}
+
+
+	
+}
+
 function animate() {
 
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
+	console.log(camera.position)
 
 }
 

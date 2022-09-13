@@ -1,4 +1,124 @@
 <html lang="es">
+	<style>
+		a {
+			color: #8ff;
+		}
+
+		#menu {
+			position: absolute;
+			bottom: 20px;
+			width: 100%;
+			text-align: center;
+		}
+
+		.element {
+			width: 120px;
+			height: 160px;
+			box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+			border: 1px solid rgba(127,255,255,0.25);
+			font-family: Helvetica, sans-serif;
+			text-align: center;
+			line-height: normal;
+			cursor: default;
+		}
+
+		
+		.element:hover {
+			box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+			border: 1px solid rgba(127,255,255,0.75);
+		}
+
+			.element .number {
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				font-size: 25px;
+				color: rgba(127,255,255,0.75);
+			}
+
+			.element .symbol {
+				position: absolute;
+				top: 40px;
+				left: 0px;
+				right: 0px;
+				font-size: 60px;
+				font-weight: bold;
+				color: rgba(255,255,255,0.75);
+				text-shadow: 0 0 10px rgba(0,255,255,0.95);
+			}
+
+			.element .details {
+				position: absolute;
+				bottom: 15px;
+				left: 0px;
+				right: 0px;
+				font-size: 12px;
+				color: rgba(127,255,255,0.75);
+			}
+
+		.elementhyp {
+			width: 120px;
+			height: 160px;
+			box-shadow: 0px 0px 12px rgba(189, 245, 245, 0.5);
+			border: 1px solid rgba(127,255,255,0.25);
+			font-family: Helvetica, sans-serif;
+			text-align: center;
+			line-height: normal;
+			cursor: default;
+		}
+
+		.elementhyp:hover {
+			box-shadow: 0px 0px 12px rgba(163, 250, 250, 0.75);
+			border: 1px solid rgba(127,255,255,0.75);
+		}
+
+		.elementhyp .number {
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				font-size: 25px;
+				color: rgba(184, 255, 255, 0.472);
+			}
+
+			.elementhyp .symbol {
+				position: absolute;
+				top: 40px;
+				left: 0px;
+				right: 0px;
+				font-size: 60px;
+				font-weight: bold;
+				color: rgba(255,255,255,0.75);
+				text-shadow: 0 0 10px rgba(187, 255, 255, 0.95);
+			}
+
+			.elementhyp .details {
+				position: absolute;
+				bottom: 15px;
+				left: 0px;
+				right: 0px;
+				font-size: 12px;
+				color: rgba(206, 255, 255, 0.75);
+			}
+
+
+		button {
+			color: rgba(127,255,255,0.75);
+			background: transparent;
+			outline: 1px solid rgba(127,255,255,0.75);
+			border: 0px;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: rgba(0,255,255,0.5);
+		}
+
+		button:active {
+			color: #000000;
+			background-color: rgba(0,255,255,0.75);
+		}
+	</style>
 	<head>
 		<title>IAC 2020: Salvador D. Escobedo</title>
         <meta charset="utf-8">
@@ -8,10 +128,22 @@
 			body {
 				margin: 0;
 			}
+			.colorbox {
+				height: 10px;
+				width: 10px;
+			}
 		</style>
         <script src="../build/mod_ship.js"></script>
 	</head>
 	<body>
+		<div id="container"></div>
+		<div id="menu">
+			<button id="posprocessor">Materials processor</button>
+			<button id="processor">Centrifugal processor</button>
+			<button id="drones">Drones</button>
+			<button id="deployer">Net deployer</button>
+			<button id="panel">Solar panels and radiators</button>
+		</div>
 		<script>
 		const app = new MOD_SHIP.App();
 		app.init();
