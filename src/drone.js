@@ -2,14 +2,12 @@ import {
 	PerspectiveCamera,
 	Scene,
 	WebGLRenderer,
-	LoadingManager,
 	AmbientLight,
 	PointLight,
-	TextureLoader
 } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 let camera, scene, renderer, object;
 
@@ -19,7 +17,9 @@ class App {
 		scene = new Scene();
 
 		camera = new PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-    	camera.position.z = 250;
+    	camera.position.z = 4;
+		camera.position.x = 2;
+		camera.position.y = 1;
 
 		const ambientLight = new AmbientLight( 0xcccccc, 0.4 );
 		scene.add( ambientLight );
@@ -29,46 +29,39 @@ class App {
 		scene.add( camera );
 
 		
-		function loadModel() {
+		// Instantiate a loader
+		const loader = new GLTFLoader();
 
-			object.traverse( function ( child ) {
+		// Load a glTF resource
+	loader.load(
+		// resource URL
+		'../app/assets/drone.glb',
+		// called when the resource is loaded
+		function ( gltf ) {
 
-				if ( child.isMesh ) child.material.map = texture;
+		
+			scene.add( gltf.scene );
 
-			} );
+			//gltf.animations; // Array<THREE.AnimationClip>
+			//gltf.scene; // THREE.Group
+			//gltf.scenes; // Array<THREE.Group>
+			//gltf.cameras; // Array<THREE.Camera>
+			//gltf.asset; // Object
 
-			object.position.y = 0;
-			object.scale.set(0.1, 0.1, 0.1);
-			scene.add( object );
+		},
+		// called while loading is progressing
+		function ( xhr ) {
+
+			console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+		},
+		// called when loading has errors
+		function ( error ) {
+
+			console.log( 'An error happened' );
 
 		}
-
-		const manager = new LoadingManager( loadModel );
-
-		// texture
-
-		const textureLoader = new TextureLoader( manager );
-		const texture = textureLoader.load( '../app/assets/uv_grid_opengl.jpg' );
-
-		function onProgress( xhr ) {
-
-			if ( xhr.lengthComputable ) {
-
-				const percentComplete = xhr.loaded / xhr.total * 100;
-				console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' );
-
-			}
-
-		}
-
-		function onError() {}
-
-		const loader = new OBJLoader( manager );
-		loader.load( '../app/assets/Drone.obj', function ( obj ) {
-
-			object = obj;
-
-		}, onProgress, onError );
+		);
 
 
 		renderer = new WebGLRenderer( { antialias: true } );
@@ -79,7 +72,6 @@ class App {
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		const controls = new OrbitControls( camera, renderer.domElement );
-
 
 		animate();
 
@@ -99,6 +91,7 @@ function onWindowResize() {
 function animate() {
 
 	requestAnimationFrame( animate );
+	scene.children[2].rotation.y += 0.001;
 	renderer.render( scene, camera );
 
 }
